@@ -1,0 +1,30 @@
+{
+  "name": "jawn-auth-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/app.js",
+    "watch": "nodemon --watch src/ src/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^7.4.2",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "csurf": "^1.10.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "cookie": "^0.4.0",
+    "jest": "^24.8.0",
+    "node-fetch": "^2.6.0"
+  }
+}

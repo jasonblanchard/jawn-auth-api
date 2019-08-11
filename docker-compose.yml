@@ -1,0 +1,42 @@
+version: "3.7"
+services: 
+  app: 
+    build: .
+    image: jasonblanchard/jawn-auth-api
+    command:
+      - /bin/bash
+      - -c
+      - |
+        npm start --production
+    environment:
+      PORT: 8080
+      SESSION_SECRET: "sekret"
+      JWT_SECRET: "skret"
+      LOGIN_PATH: "/health"
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f app:8080/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - default
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    image: jasonblanchard/jawn-auth-api:test
+    command:
+      - /bin/bash
+      - -c
+      - |
+        tail -f /dev/null
+    environment:
+      SERVICE_BASE_URL: "http://app:8080"
+    networks:
+      - default
+networks:
+  default:
