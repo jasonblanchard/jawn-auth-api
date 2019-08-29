@@ -16,5 +16,7 @@ jobs:
       run: docker-compose up -d
     - name: wait this is dumb
       run: sleep 10s
+    - name: check running containers
+      run: docker ps
     - name: Run tests
       run: docker exec jawn-auth-api-test npm run test
