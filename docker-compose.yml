@@ -1,6 +1,6 @@
 version: "3.7"
-services: 
-  app: 
+services:
+  app:
     build: .
     image: jasonblanchard/jawn-auth-api
     command:
@@ -36,6 +36,7 @@ services:
         tail -f /dev/null
     environment:
       SERVICE_BASE_URL: "http://app:8080"
+    container_name: jawn-auth-api-test
     networks:
       - default
 networks:
