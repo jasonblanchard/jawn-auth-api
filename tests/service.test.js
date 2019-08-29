@@ -8,7 +8,7 @@ test('the service is running', () => {
   return fetch(`${baseUrl}/health`)
     .then(response => response.json())
     .then(body => {
-      expect(body.status).toEqual("ok");
+      expect(body.status).toEqual("oasdfk");
     });
 });
 
