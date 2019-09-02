@@ -1,4 +1,4 @@
-name: CI
+name: Pre-merge
 
 on:
   pull_request:
@@ -6,11 +6,8 @@ on:
     - master
 
 jobs:
-
-  build:
- 
+  test:
     runs-on: ubuntu-latest
- 
     steps:
     - uses: actions/checkout@v1
     - name: Install docker-compose
@@ -19,3 +16,4 @@ jobs:
       run: docker-compose up -d
     - name: Run tests
       run: docker exec jawn-auth-api-test npm run test
+
