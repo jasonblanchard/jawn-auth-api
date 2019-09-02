@@ -1,0 +1,23 @@
+name: Post-merge
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install docker-compose
+      run: sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+    - name: Docker login
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u jasonblanchard --password-stdin
+    - name: Tag & push
+      run: |
+        TAG="$(git rev-parse HEAD)"
+        IMAGE=jasonblanchard/jawn-auth-api
+        docker tag ${IMAGE} ${IMAGE}:${TAG}
+        docker push ${IMAGE}:${TAG}
+
