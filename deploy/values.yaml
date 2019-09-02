@@ -1,0 +1,4 @@
+relicats: 1
+name: auth-api
+image: jasonblanchard/jawn-auth-api
+port: 8080
