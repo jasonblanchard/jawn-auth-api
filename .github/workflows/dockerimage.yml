@@ -6,7 +6,6 @@ on:
     - master
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -17,3 +16,12 @@ jobs:
       run: docker-compose up -d
     - name: Run tests
       run: docker exec jawn-auth-api-test npm run test
+    - name: Docker login
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u jasonblanchard --password-stdin
+    - name: Tag & push
+      run: |
+        TAG="$(git rev-parse HEAD)"
+        IMAGE=jasonblanchard/jawn-public-client
+        docker tag ${IMAGE} ${IMAGE}:${TAG}
+        docker push ${IMAGE}:${TAG}
+    
