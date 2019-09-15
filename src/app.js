@@ -11,18 +11,24 @@ const morgan = require('morgan');
 const usersByUsername = {
   'test': {
     username: 'test',
-    password: 'testpass',
+    password: process.env.TEST_PASSWORD,
     id: 1,
     uuid: 'bcf4e360-2bd4-41a1-a9d0-786577e02f4a'
+  },
+  'jason': {
+    username: 'jason',
+    password: process.env.JASON_PASSWORD,
+    id: 1,
+    uuid: '2b5545ef-3557-4f52-994d-daf89e04c390'
   }
 }
- 
+
 var app = express();
 
 app.use(bodyParser.json());
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
- 
+
 app.use(session({
   key: 'sessionId',
   secret: process.env.SESSION_SECRET,
@@ -37,11 +43,11 @@ app.use(cookieParser());
 app.get('/health', (request, response) => {
   return response.json({ status: 'ok', service: 'auth', version: 1 });
 });
- 
+
 app.post('/login', (request, response) => {
   const { username, password } = request.body;
   const user = usersByUsername[username];
-  
+
   if (user && user.password === password) {
     request.session.user = { id: user.id, uuid: user.uuid };
     return response.status(201).end();
