@@ -57,15 +57,25 @@ spec:
             value: '{{ .Values.port }}'
           - name: 'LOGIN_PATH'
             value: '/auth/login'
+          - name: 'TEST_PASSWORD'
+            valueFrom:
+              secretKeyRef:
+                name: jawn-auth-api-secrets
+                key: testPassword
+          - name: 'JASON_PASSWORD'
+            valueFrom:
+              secretKeyRef:
+                name: jawn-auth-api-secrets
+                key: jasonPassword
           - name: 'JWT_SECRET'
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: jawn-auth-api-secrets
                 key: jwtSecret
           - name: 'SESSION_SECRET'
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: jawn-auth-api-secrets
                 key: sessionSecret
         ports:
         - containerPort: {{ .Values.port }}

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 const cookieParser = require('cookie');
 const jwt = require('jsonwebtoken');
@@ -27,7 +28,7 @@ describe('GET /login', () => {
   it('returns 201 when given valid username', () => {
     return fetch(`${baseUrl}/login`, {
       method: 'POST',
-      body: JSON.stringify({ username: 'test', password: 'testpass' }),
+      body: JSON.stringify({ username: 'test', password: process.env.TEST_PASSWORD }),
       headers: { 'Content-Type': 'application/json' },
     })
       .then(response => {
@@ -78,7 +79,7 @@ describe('GET /session/authn', () => {
   it('returns 200 with token with valid session', () => {
     return fetch(`${baseUrl}/login`, {
       method: 'POST',
-      body: JSON.stringify({ username: 'test', password: 'testpass' }),
+      body: JSON.stringify({ username: 'test', password: process.env.TEST_PASSWORD }),
       headers: { 'Content-Type': 'application/json' },
     })
       .then(response => {
@@ -105,7 +106,7 @@ describe('GET /session/authn', () => {
   it('rejects POST requests without a CSRF token', async () => {
     const loginResponse = await fetch(`${baseUrl}/login`, {
       method: 'POST',
-      body: JSON.stringify({ username: 'test', password: 'testpass' }),
+      body: JSON.stringify({ username: 'test', password: process.env.TEST_PASSWORD }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -125,7 +126,7 @@ describe('GET /session/authn', () => {
   it('allows POST requests with CSRF token', async () => {
     const loginResponse = await fetch(`${baseUrl}/login`, {
       method: 'POST',
-      body: JSON.stringify({ username: 'test', password: 'testpass' }),
+      body: JSON.stringify({ username: 'test', password: process.env.TEST_PASSWORD }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -153,7 +154,7 @@ describe('DELETE /session', () => {
   it('removes the cookie', () => {
     return fetch(`${baseUrl}/login`, {
       method: 'POST',
-      body: JSON.stringify({ username: 'test', password: 'testpass' }),
+      body: JSON.stringify({ username: 'test', password: process.env.TEST_PASSWORD }),
       headers: { 'Content-Type': 'application/json' },
     })
       .then(response => {
